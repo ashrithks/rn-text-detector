@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   s.author         = package['author']
   s.homepage       = package['homepage']
   s.platform       = :ios, "7.0"
-  s.source         = { :git => "https://github.com/zsajjad/react-native-text-detector.git", :tag => "master" }
+  s.source         = { :git => "https://github.com/ashrithks/rn-text-detector.git", :tag => "master" }
   s.source_files   = "*.{h,m}"
   s.requires_arc   = true
 

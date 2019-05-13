@@ -1,8 +1,8 @@
-# react-native-text-detector
+# rn-text-detector
 
 ## Getting started
 
-`$ npm install react-native-text-detector --save` or `yarn add react-native-text-detector`
+`$ npm install rn-text-detector --save` or `yarn add rn-text-detector`
 
 ### Manual installation
 
@@ -13,7 +13,7 @@ Please create project on firebase console, Download a GoogleService-Info.plist f
 ##### Using Pods (Recommended)
 1. Add following in `ios/Podfile` 
 ```ruby
-    pod 'RNTextDetector', path: '../node_modules/react-native-text-detector/ios'
+    pod 'RNTextDetector', path: '../node_modules/rn-text-detector/ios'
 ```
 2. Run following from project's root directory
 ```bash
@@ -23,7 +23,7 @@ Please create project on firebase console, Download a GoogleService-Info.plist f
 
 ##### Direct Linking
 1.  In XCode, in the project navigator, right click `Libraries` ➜ `Add Files to [your project's name]`
-2.  Go to `node_modules` ➜ `react-native-text-detector` and add `RNTextDetector.xcodeproj`
+2.  Go to `node_modules` ➜ `rn-text-detector` and add `RNTextDetector.xcodeproj`
 3.  In XCode, in the project navigator, select your project. Add `libRNTextDetector.a` to your project's `Build Phases` ➜ `Link Binary With Libraries`
 4.  Run your project (`Cmd+R`)<
 
@@ -36,8 +36,8 @@ Please create project on firebase console, Download a GoogleService-Info.plist f
 
 2.  Append the following lines to `android/settings.gradle`:
     ```
-    include ':react-native-text-detector'
-    project(':react-native-text-detector').projectDir = new File(rootProject.projectDir, 	'../node_modules/react-native-text-detector/android')
+    include ':rn-text-detector'
+    project(':rn-text-detector').projectDir = new File(rootProject.projectDir, 	'../node_modules/rn-text-detector/android')
     ```
 3.  Insert the following lines inside the dependencies block in `android/app/build.gradle`:
 
@@ -47,7 +47,7 @@ Please create project on firebase console, Download a GoogleService-Info.plist f
         implementation 'com.google.firebase:firebase-core:16.0.1'
         implementation 'com.google.firebase:firebase-ml-vision:17.0.0'
 
-        implementation (project(':react-native-text-detector')) {
+        implementation (project(':rn-text-detector')) {
             exclude group: 'com.google.firebase'
         }
     }
@@ -84,7 +84,7 @@ Please create project on firebase console, Download a GoogleService-Info.plist f
  *
  */
 
-import RNTextDetector from "react-native-text-detector";
+import RNTextDetector from "rn-text-detector";
 
 export class TextDetectionComponent extends PureComponent {
   ...
