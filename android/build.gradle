@@ -1,0 +1,54 @@
+
+def safeExtGet(prop, fallback) {
+    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
+
+buildscript {
+  repositories {
+    google()
+    maven {
+      url 'https://maven.google.com'
+    }
+    jcenter()
+  }
+
+  dependencies {
+    classpath 'com.android.tools.build:gradle:3.3.1'
+  }
+}
+
+apply plugin: 'com.android.library'
+
+android {
+  compileSdkVersion safeExtGet('compileSdkVersion', 28)
+  buildToolsVersion safeExtGet('buildToolsVersion', '28.0.3')
+
+  defaultConfig {
+    minSdkVersion safeExtGet('minSdkVersion', 16)
+    targetSdkVersion safeExtGet('targetSdkVersion', 28)
+  }
+    lintOptions {
+        abortOnError false
+    }
+    packagingOptions {
+    exclude 'META-INF/androidx.exifinterface_exifinterface.version'
+    exclude 'META-INF/proguard/androidx-annotations.pro'
+  }
+}
+
+repositories {
+    mavenCentral()
+    google()
+  jcenter()
+  maven {
+   url 'https://maven.google.com'
+  }
+  maven { url "https://jitpack.io" }
+}
+
+dependencies {
+    implementation 'com.google.firebase:firebase-core:+'
+    implementation "com.google.firebase:firebase-ml-vision:${safeExtGet('firebase-ml-vision', '19.0.3')}"
+    implementation 'com.facebook.react:react-native:+'
+}
+  
