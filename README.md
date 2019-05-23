@@ -11,15 +11,33 @@
 Please create project on firebase console, Download a GoogleService-Info.plist file from [Firebase console](https://console.firebase.google.com/?pli=1) and include it in your app.
 
 ##### Using Pods (Recommended)
-1. Add following in `ios/Podfile` 
+1. In `<your_project>/ios` create Podfile file `pod init`
+2. Add following in `ios/Podfile` 
 ```ruby
-    pod 'RNTextDetector', path: '../node_modules/rn-text-detector/ios'
+    pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
+    pod 'React', :path => '../node_modules/react-native'
+    pod 'RNTextDetector', path: '../node_modules/react-native-text-detector/ios'
 ```
-2. Run following from project's root directory
+3. Run following from project's root directory
 ```bash
-    cd ios && pod install
+    pod update && pod install
 ```
-3. Use `<your_project>.xcworkspace` to run your app
+4. Use `<your_project>.xcworkspace` to run your app
+5. In Xcode include GoogleService-Info.plist in your app
+6. Configure Firebase, edit `ios/<your_project>/AppDelegate.m` import Firebase `@import Firebase;` and configure the library `[FIRApp configure];`
+```bash
+    ...
+    #import <React/RCTRootView.h>
+    @import Firebase;
+    ...
+    
+    - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+  [FIRApp configure];
+
+  NSURL *jsCodeLocation;
+  ...
+```
 
 ##### Direct Linking
 1.  In XCode, in the project navigator, right click `Libraries` ➜ `Add Files to [your project's name]`
@@ -44,8 +62,6 @@ Please create project on firebase console, Download a GoogleService-Info.plist f
     ```
     ...
     dependencies {
-        implementation 'com.google.firebase:firebase-core:16.0.1'
-        implementation 'com.google.firebase:firebase-ml-vision:17.0.0'
 
         implementation (project(':rn-text-detector')) {
             exclude group: 'com.google.firebase'
