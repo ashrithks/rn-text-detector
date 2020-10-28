@@ -8,14 +8,12 @@ Pod::Spec.new do |s|
   s.license        = package['license']
   s.author         = package['author']
   s.homepage       = package['homepage']
-  s.platform       = :ios, "7.0"
+  s.platform       = :ios, "10.0"
   s.source         = { :git => "https://github.com/ashrithks/rn-text-detector.git", :tag => "master" }
   s.source_files   = "*.{h,m}"
   s.requires_arc   = true
 
 
   s.dependency     "React"
-  s.dependency     'Firebase/Core'
-  s.dependency     'Firebase/MLVision'
-  s.dependency     'Firebase/MLVisionTextModel'
+  s.dependency     'GoogleMLKit/TextRecognition'
 end

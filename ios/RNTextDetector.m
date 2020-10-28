@@ -4,8 +4,7 @@
 #import <React/RCTBridge.h>
 #import <React/RCTLog.h>
 
-#import <FirebaseCore/FirebaseCore.h>
-#import <FirebaseMLVision/FirebaseMLVision.h>
+@import MLKit;
 
 @implementation RNTextDetector
 
@@ -19,14 +18,14 @@ RCT_EXPORT_MODULE()
 static NSString *const detectionNoResultsMessage = @"Something went wrong";
 
 
-NSMutableArray* prepareOutput(FIRVisionText *result) {
+NSMutableArray* prepareOutput(MLKText *result) {
     NSMutableArray *output = [NSMutableArray array];
-    for (FIRVisionTextBlock *block in result.blocks) {
+    for (MLKTextBlock *block in result.blocks) {
         
         NSMutableArray *blockElements = [NSMutableArray array];
-        for (FIRVisionTextLine *line in block.lines) {
+        for (MLKTextLine *line in block.lines) {
             NSMutableArray *lineElements = [NSMutableArray array];
-            for (FIRVisionTextElement *element in line.elements) {
+            for (MLKTextElement *element in line.elements) {
                 NSMutableDictionary *e = [NSMutableDictionary dictionary];
                 e[@"text"] = element.text;
                 e[@"cornerPoints"] = element.cornerPoints;
@@ -88,12 +87,12 @@ RCT_REMAP_METHOD(detectFromUri, detectFromUri:(NSString *)imagePath resolver:(RC
             });
             return;
         }
-        
-        FIRVision *vision = [FIRVision vision];
-        FIRVisionTextRecognizer *textRecognizer = [vision onDeviceTextRecognizer];
-        FIRVisionImage *handler = [[FIRVisionImage alloc] initWithImage:image];
-        
-        [textRecognizer processImage:handler completion:^(FIRVisionText *_Nullable result, NSError *_Nullable error) {
+
+        MLKTextRecognizer *textRecognizer = [MLKTextRecognizer textRecognizer];
+        MLKVisionImage *visionImage = [[MLKVisionImage alloc] initWithImage:image];
+        visionImage.orientation = image.imageOrientation;
+
+        [textRecognizer processImage:visionImage completion:^(MLKText *_Nullable result, NSError *_Nullable error) {
             @try {
                 if (error != nil || result == nil) {
                     NSString *errorString = error ? error.localizedDescription : detectionNoResultsMessage;
@@ -137,12 +136,12 @@ RCT_REMAP_METHOD(detectFromFile, detectFromFile:(NSString *)imagePath resolver:(
             });
             return;
         }
-        
-        FIRVision *vision = [FIRVision vision];
-        FIRVisionTextRecognizer *textRecognizer = [vision onDeviceTextRecognizer];
-        FIRVisionImage *handler = [[FIRVisionImage alloc] initWithImage:image];
-        
-        [textRecognizer processImage:handler completion:^(FIRVisionText *_Nullable result, NSError *_Nullable error) {
+
+        MLKTextRecognizer *textRecognizer = [MLKTextRecognizer textRecognizer];
+        MLKVisionImage *visionImage = [[MLKVisionImage alloc] initWithImage:image];
+        visionImage.orientation = image.imageOrientation;
+
+        [textRecognizer processImage:visionImage completion:^(MLKText *_Nullable result, NSError *_Nullable error) {
             @try {
                 if (error != nil || result == nil) {
                     NSString *errorString = error ? error.localizedDescription : detectionNoResultsMessage;
