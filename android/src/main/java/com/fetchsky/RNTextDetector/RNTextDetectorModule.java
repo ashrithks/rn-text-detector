@@ -16,10 +16,10 @@ import com.facebook.react.bridge.WritableMap;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.ml.vision.FirebaseVision;
-import com.google.firebase.ml.vision.common.FirebaseVisionImage;
-import com.google.firebase.ml.vision.text.FirebaseVisionText;
-import com.google.firebase.ml.vision.text.FirebaseVisionTextRecognizer;
+import com.google.mlkit.vision.common.InputImage;
+import com.google.mlkit.vision.text.Text;
+import com.google.mlkit.vision.text.TextRecognition;
+import com.google.mlkit.vision.text.TextRecognizer;
 
 import java.io.IOException;
 import java.net.URL;
@@ -27,14 +27,14 @@ import java.net.URL;
 public class RNTextDetectorModule extends ReactContextBaseJavaModule {
 
   private final ReactApplicationContext reactContext;
-  private FirebaseVisionTextRecognizer detector;
-  private FirebaseVisionImage image;
+  private TextRecognizer detector;
+  private InputImage image;
 
   public RNTextDetectorModule(ReactApplicationContext reactContext) {
     super(reactContext);
     this.reactContext = reactContext;
     try {
-        detector = FirebaseVision.getInstance().getOnDeviceTextRecognizer();
+        detector = TextRecognition.getClient();
     }
     catch (IllegalStateException e) {
         e.printStackTrace();
@@ -44,13 +44,13 @@ public class RNTextDetectorModule extends ReactContextBaseJavaModule {
   @ReactMethod
     public void detectFromFile(String uri, final Promise promise) {
         try {
-            image = FirebaseVisionImage.fromFilePath(this.reactContext, android.net.Uri.parse(uri));
-            Task<FirebaseVisionText> result =
-                    detector.processImage(image)
-                            .addOnSuccessListener(new OnSuccessListener<FirebaseVisionText>() {
+            image = InputImage.fromFilePath(this.reactContext, android.net.Uri.parse(uri));
+            Task<Text> result =
+                    detector.process(image)
+                            .addOnSuccessListener(new OnSuccessListener<Text>() {
                                 @Override
-                                public void onSuccess(FirebaseVisionText firebaseVisionText) {
-                                    promise.resolve(getDataAsArray(firebaseVisionText));
+                                public void onSuccess(Text visionText) {
+                                    promise.resolve(getDataAsArray(visionText));
                                 }
                             })
                             .addOnFailureListener(
@@ -71,13 +71,14 @@ public class RNTextDetectorModule extends ReactContextBaseJavaModule {
     public void detectFromUri(String uri, final Promise promise) {
         try {
             URL url = new URL(uri);
-            image = FirebaseVisionImage.fromBitmap(BitmapFactory.decodeStream(url.openConnection().getInputStream()));
-            Task<FirebaseVisionText> result =
-                    detector.processImage(image)
-                            .addOnSuccessListener(new OnSuccessListener<FirebaseVisionText>() {
+            int rotationDegree = 0;
+            image = InputImage.fromBitmap(BitmapFactory.decodeStream(url.openConnection().getInputStream()),rotationDegree);
+            Task<Text> result =
+                    detector.process(image)
+                            .addOnSuccessListener(new OnSuccessListener<Text>() {
                                 @Override
-                                public void onSuccess(FirebaseVisionText firebaseVisionText) {
-                                    promise.resolve(getDataAsArray(firebaseVisionText));
+                                public void onSuccess(Text visionText) {
+                                    promise.resolve(getDataAsArray(visionText));
                                 }
                             })
                             .addOnFailureListener(
@@ -95,20 +96,20 @@ public class RNTextDetectorModule extends ReactContextBaseJavaModule {
     }
 
     /**
-     * Converts firebaseVisionText into a map
+     * Converts visionText into a map
      *
-     * @param firebaseVisionText
+     * @param Text
      * @return
      */
-    private WritableArray getDataAsArray(FirebaseVisionText firebaseVisionText) {
+    private WritableArray getDataAsArray(Text visionText) {
         WritableArray data = Arguments.createArray();
 
-        for (FirebaseVisionText.TextBlock block: firebaseVisionText.getTextBlocks()) {
+        for (Text.TextBlock block: visionText.getTextBlocks()) {
             WritableArray blockElements = Arguments.createArray();
 
-            for (FirebaseVisionText.Line line: block.getLines()) {
+            for (Text.Line line: block.getLines()) {
                 WritableArray lineElements = Arguments.createArray();
-                for (FirebaseVisionText.Element element: line.getElements()) {
+                for (Text.Element element: line.getElements()) {
                     WritableMap e = Arguments.createMap();
 
                     WritableMap eCoordinates = Arguments.createMap();
