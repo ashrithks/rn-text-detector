@@ -8,7 +8,6 @@
 
 #### iOS
 
-Please create project on firebase console, Download a GoogleService-Info.plist file from [Firebase console](https://console.firebase.google.com/?pli=1) and include it in your app.
 
 ##### Using Pods (Recommended)
 1. In `<your_project>/ios` create Podfile file `pod init`
@@ -23,21 +22,6 @@ Please create project on firebase console, Download a GoogleService-Info.plist f
     pod update && pod install
 ```
 4. Use `<your_project>.xcworkspace` to run your app
-5. In Xcode include GoogleService-Info.plist in your app
-6. Configure Firebase, edit `ios/<your_project>/AppDelegate.m` import Firebase `@import Firebase;` and configure the library `[FIRApp configure];`
-```bash
-    ...
-    #import <React/RCTRootView.h>
-    @import Firebase;
-    ...
-    
-    - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
-  [FIRApp configure];
-
-  NSURL *jsCodeLocation;
-  ...
-```
 
 ##### Direct Linking
 1.  In XCode, in the project navigator, right click `Libraries` ➜ `Add Files to [your project's name]`
@@ -63,33 +47,12 @@ Please create project on firebase console, Download a GoogleService-Info.plist f
     ...
     dependencies {
 
-        implementation (project(':rn-text-detector')) {
-            exclude group: 'com.google.firebase'
-        }
+        implementation 'rn-text-detector'
     }
+#### MLKIT
 
-    // Place this line at the end of file
-
-    apply plugin: 'com.google.gms.google-services'
-
-    // Work around for onesignal-gradle-plugin compatibility
-    com.google.gms.googleservices.GoogleServicesPlugin.config.disableVersionCheck = true
-    ```
-
-4.  Insert the following lines inside the dependencies block in `android/build.gradle`:
-
-    ```
-    buildscript {
-        repositories {
-            google()
-            ...
-        }
-        dependencies {
-            classpath 'com.android.tools.build:gradle:3.0.1'
-            classpath 'com.google.gms:google-services:4.0.1' // google-services plugin
-        }
-    }
-    ```
+Follow MLkit documentation,
+https://developers.google.com/ml-kit/vision/text-recognition
 
 ## Usage
 
