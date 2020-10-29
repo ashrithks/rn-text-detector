@@ -47,7 +47,7 @@ repositories {
 }
 
 dependencies {
-    implementation "com.google.android.gms:play-services-mlkit-text-recognition:${safeExtGet('firebase-ml-vision', '16.1.1')}"
+    implementation "com.google.android.gms:play-services-mlkit-text-recognition:${safeExtGet('mlkit-vision', '16.1.1')}"
     implementation 'com.facebook.react:react-native:+'
 }
   

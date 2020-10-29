@@ -4,7 +4,8 @@
 #import <React/RCTBridge.h>
 #import <React/RCTLog.h>
 
-@import MLKit;
+@import MLKitTextRecognition;
+@import MLKitVision;
 
 @implementation RNTextDetector
 
@@ -29,7 +30,7 @@ NSMutableArray* prepareOutput(MLKText *result) {
                 NSMutableDictionary *e = [NSMutableDictionary dictionary];
                 e[@"text"] = element.text;
                 e[@"cornerPoints"] = element.cornerPoints;
-                e[@"confidence"] = element.confidence;
+                //e[@"confidence"] = element.confidence;
                 e[@"bounding"] = @{
                                    @"top": @(element.frame.origin.y),
                                    @"left": @(element.frame.origin.x),
@@ -42,7 +43,7 @@ NSMutableArray* prepareOutput(MLKText *result) {
             NSMutableDictionary *l = [NSMutableDictionary dictionary];
             l[@"text"] = line.text;
             l[@"cornerPoints"] = line.cornerPoints;
-            l[@"confidence"] = line.confidence;
+            //l[@"confidence"] = line.confidence;
             l[@"elements"] = lineElements;
             l[@"bounding"] = @{
                                @"top": @(line.frame.origin.y),
@@ -56,7 +57,7 @@ NSMutableArray* prepareOutput(MLKText *result) {
         NSMutableDictionary *b = [NSMutableDictionary dictionary];
         b[@"text"] = block.text;
         b[@"cornerPoints"] = block.cornerPoints;
-        b[@"confidence"] = block.confidence;
+        //b[@"confidence"] = block.confidence;
         b[@"bounding"] = @{
                            @"top": @(block.frame.origin.y),
                            @"left": @(block.frame.origin.x),

@@ -3,7 +3,6 @@ package com.fetchsky.RNTextDetector;
 
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
-import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.facebook.react.bridge.Arguments;
@@ -23,6 +22,8 @@ import com.google.mlkit.vision.text.TextRecognizer;
 
 import java.io.IOException;
 import java.net.URL;
+
+import androidx.annotation.NonNull;
 
 public class RNTextDetectorModule extends ReactContextBaseJavaModule {
 
@@ -98,7 +99,7 @@ public class RNTextDetectorModule extends ReactContextBaseJavaModule {
     /**
      * Converts visionText into a map
      *
-     * @param Text
+     * @param visionText
      * @return
      */
     private WritableArray getDataAsArray(Text visionText) {
