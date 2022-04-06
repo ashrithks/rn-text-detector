@@ -4,6 +4,7 @@
 #import <React/RCTBridge.h>
 #import <React/RCTLog.h>
 
+@import MLKitTextRecognitionCommon;
 @import MLKitTextRecognition;
 @import MLKitVision;
 
