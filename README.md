@@ -47,7 +47,8 @@
     ...
     dependencies {
 
-        implementation 'rn-text-detector'
+        implementation files('rn-text-detector')
+
     }
 #### MLKIT
 
